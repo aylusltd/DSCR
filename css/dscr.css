@@ -1,0 +1,185 @@
+input
+{
+	text-align:right;
+	width: 80px;
+}
+table td, table th
+{
+	padding:0px 10px;
+	color:#606060;
+}
+tr td
+{
+	text-align:right;
+}
+tr td:first-child
+{
+	text-align:left;
+}
+body>div
+{
+	float:left;
+	overflow:auto;
+	color:#303030;
+}
+body>div>h3
+{
+	width:100%;
+	text-align:center;
+}
+#debt
+{
+	width:55%; 
+	margin-left:2.5%;
+	background-color:rgba(0,60,255,.2);
+	
+}
+#revenue{width:40%}
+
+#debt, #revenue
+{
+	height:30%;
+	margin-top:2%;
+}
+#iDSCR
+{
+	width:22.5%;
+	margin-left:2.5%;
+	background-color:rgba(60,128,255,.2)
+}
+#pDSCR
+{
+	width:72.5%;
+	background-color:rgba(0,128,255,.2)
+}
+
+#pDSCR,#iDSCR
+{
+	height:62.5%;
+}
+
+#logo
+{
+	height:120px;
+	width:120px;
+	background-image:url(../images/logo.jpg);
+	position:fixed;
+	top:5px;
+	right:5px;
+	z-index: 1000;
+}
+
+.gl
+{
+	height:1px;
+	width:100%;
+	background-color:#000000;
+	position: relative;
+}
+
+#bgBackground
+{
+	background-color : white;
+	height : 80%;
+	width : 75%;
+	left : 12.5%;
+	position : relative;
+}
+
+#plotArea
+{
+	top: 0;
+	height : 85%;
+	width : 75%;
+	left : 22.5%;
+	position : relative;
+}
+
+.bLabel
+{
+	position:fixed;
+	left:7%;
+}
+
+#bgBar
+{
+	background-color:#0000E0;
+	width: 50%;
+	position: absolute;
+	left: 25%;
+	z-index:10;
+}
+#bgTarget
+{
+	background-color:lightgreen;
+	width: 100%;
+	position: absolute;
+	left:0;
+	z-index: 20;
+	opacity:0.5;
+}
+
+#bgVal
+{
+	width: 50%;
+	left: 25%;
+	position: absolute;
+	text-align: center;
+	height: 15%;
+	padding: 4%;
+}
+
+#dTable
+{
+	right: 7%;
+	top: 45%;
+	position: absolute;
+	border-collapse:collapse;
+	background-color:#BBCCFF
+}
+
+#dTable tr td, #dTable tr th
+{
+	border: 1px #606060 solid;
+}
+
+#dTable tr:nth-child(even)
+{
+	background-color:white;
+}
+
+#dTable tr:nth-child(odd)
+{
+	background-color:#DDDDDD;
+}
+
+
+#dTable tr:first-child
+{
+	background-color:#BBCCFF
+}
+
+#dTable tr td
+{
+	text-align:right;	
+}
+
+#dTable tr td:first-child
+{
+	text-align:center;
+}
+
+#lineGraph{
+	left: 30%;
+	width: 55%;
+	position:absolute;
+	top:45%;
+	height: 45%;
+}
+
+polyline
+{
+	stroke: red;
+	stroke-width : 1;
+	fill: none
+}
