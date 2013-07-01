@@ -1,64 +1,5 @@
 ;
 
-(function ($){
-	$.fn.top = function top(top)
-	{
-		
-		if(top)
-		{
-			this.css("top",top);
-			return this;
-		}
-		else
-		{
-			return this.css("top");
-		}
-		
-		
-		
-	}
-})(jQuery);
-
-(function($){
-	$.fn.currencify = function()
-	{
-		this.each(function(){	
-			var start=$(this).html()+"";
-			if(start.search(/[A-Z],[a-z] /)<1)
-				console.log("No letters");
-			var str1, str2;
-			if(start.charAt(0) == "$")
-				start = start.substr(1,start.length)
-			
-			if(start.search(/\./)<0)
-			{
-				//no decimal
-				
-				start+=".00";
-			}
-			if(start.length>6)
-			{
-				//add commas
-				counter = start.length;
-				var counterspot = 6;
-				while(counter>6)
-				{
-					
-					
-					str1=start.substr(0,start.length-counterspot)
-					str2=start.substr(start.length-counterspot,start.length);
-					start = str1+ "," + str2;
-					
-					counterspot+=4;
-					counter-=3;
-				}
-			}
-			
-			$(this).html("$"+start);
-		});
-	}
-})
-(jQuery)
 //globals
 var tableData = ["Equipment Loan", "Mortgage", "Line of Credit", "Equipment Line"];
 var tableProperties = ["Principal", "Interest", "Term", "Accelerated Pay Down"];
@@ -523,6 +464,27 @@ function makeLineGraph()
 		h=h>arr[i]?h:arr[i];
 	}
 	
+	h=h>1.35?h:1.35;
+	
+	stressed={};
+	var stressor=0;
+	var x=0;
+	//stress lines
+	for(i=0; i<3; i++)
+	{
+		
+		stressed[i]=[];
+		for(var j =0 ; j<arr.length; j++)
+		{
+			
+			stressor= 1 - ((i+1)/10);
+			x=pRev[j]*stressor/pDS[j];
+			x=Math.floor(x*1000)/1000;
+			stressed[i].push(x);
+		}
+		stressed[i][0]=arr[0];
+	}
+	
 	h=Math.ceil(h)+2;
 	
 	var str=""
@@ -599,7 +561,41 @@ function makeLineGraph()
 	}
 	
 	
-	d3.select("svg").append("polyline").attr("points",str).attr("style","stroke-width:" + h/40);
+	d3.select("svg").append("polyline").attr("points",str).attr("style","stroke-width:" + h/80);
+	
+	d3.select("svg")
+			.append("text")
+			.attr("style","font-size:" + (h-2)/20 + "px; fill:green")
+			.attr("x", arr.length + 0.125)
+			.attr("y", h - arr[arr.length-1] -1)
+			.text("Projected");
+	
+	var strArr = [];
+	for(i=0;i<3;i++)
+	{
+		strArr[i]="";
+		for(j=0;j<stressed[i].length;j++)
+		{
+			strArr[i] += (j+1) + "," + (h -(stressed[i][j])-1) + " ";
+		}
+		
+		rgbStr = rgb(2 - i);
+		
+		d3.select("svg")
+			.append("polyline")
+			.attr("points", strArr[i])
+			.attr("style","stroke-width:" + h/80 + "; stroke:" + rgbStr);
+			
+		d3.select("svg")
+			.append("text")
+			.attr("style","font-size:" + (h-2)/20 + "px; fill:" + rgbStr)
+			.attr("x", arr.length + 0.125)
+			.attr("y", h - stressed[i][arr.length-1] -1)
+			.text((i+1)*10 + "% Stressed");
+				
+		
+	}
+	
 	
 	str=  "1, " + (h-2.25) + " ";
 	str+= w-1 + "," + (h-2.25);
@@ -622,6 +618,27 @@ function makeLineGraph()
 			}
 	};
 	
+}
+
+function rgb(i)
+{
+	var r = 15 - ( i * 5);
+	var g = i*5;
+	var b = 0;
+	
+	r>16||r<0?r=0:null;
+	g>16||g<0?g=0:null;
+	b>16||b<0?b=0:null;
+	
+	r>9?r=String.fromCharCode(87+r):null;
+	g>9?g=String.fromCharCode(87+g):null;
+	b>9?b=String.fromCharCode(87+g):null;
+	
+	
+	
+	var str = "#" + r + g + b;
+	
+	return str;
 }
 
 main();
