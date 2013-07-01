@@ -69,37 +69,43 @@ Function.method('swiss', function (parent) {
 	{
 		this.each(function(){	
 			var start=$(this).html()+"";
-			if(start.search(/[A-Z],[a-z] /)<1)
-				console.log("No letters");
-			var str1, str2;
-			if(start.charAt(0) == "$")
-				start = start.substr(1,start.length)
-			
-			if(start.search(/\./)<0)
+			if(start.search(/[A-Z,a-z]/)<0)
 			{
-				//no decimal
+				/*console.log($(this).html());
+				console.log("No letters");*/
+			
+				var str1, str2;
+				if(start.charAt(0) == "$")
+					start = start.substr(1,start.length)
 				
-				start+=".00";
-			}
-			if(start.length>6)
-			{
-				//add commas
-				counter = start.length;
-				var counterspot = 6;
-				while(counter>6)
+				if(start.search(/\./)<0)
 				{
+					//no decimal
 					
-					
-					str1=start.substr(0,start.length-counterspot)
-					str2=start.substr(start.length-counterspot,start.length);
-					start = str1+ "," + str2;
-					
-					counterspot+=4;
-					counter-=3;
+					start+=".00";
 				}
+				var decReg = /[0-9]*\.[0-9]$/;
+				decReg.test(start)?start+="0":null;
+				if(start.length>6)
+				{
+					//add commas
+					counter = start.length;
+					var counterspot = 6;
+					while(counter>6)
+					{
+						
+						
+						str1=start.substr(0,start.length-counterspot)
+						str2=start.substr(start.length-counterspot,start.length);
+						start = str1+ "," + str2;
+						
+						counterspot+=4;
+						counter-=3;
+					}
+				}
+				
+				$(this).html("$"+start);
 			}
-			
-			$(this).html("$"+start);
 		});
 	}
 	return this;

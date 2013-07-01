@@ -216,7 +216,7 @@ function updateDebtService()
 		var pmt = 0;
 		
 		var rate = getValue(id,"Interest",1);
-		var term = 0;
+		var term = getValue(id,"Term",1);
 		var principal = getValue(id,"Principal",1);
 		var LOC=true;
 		var pdown=0+getValue(id,"Accelerated Pay Down",1);
@@ -239,6 +239,7 @@ function updateDebtService()
 	var debtService = 0;
 	for(var i =0; i<pmtArr.length; i++)
 		debtService+=pmtArr[i]
+	debtService = Math.floor(debtService*100)/100;
 	$("#debtService")
 		.html("$"+debtService)
 		.attr("data-value",debtService);
