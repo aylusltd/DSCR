@@ -1,7 +1,7 @@
 input
 {
 	text-align:right;
-	width: 80px;
+	width: 75px;
 }
 table td, table th
 {
@@ -16,46 +16,87 @@ tr td:first-child
 {
 	text-align:left;
 }
-body>div
+#topWrapper>div, #bottomWrapper>div
 {
 	float:left;
-	overflow:auto;
+	
 	color:#303030;
+	
 }
-body>div>h3
+div>h3
 {
 	width:100%;
 	text-align:center;
 }
 #debt
 {
-	width:55%; 
-	margin-left:2.5%;
+	width:65%; 
 	background-color:rgba(0,60,255,.2);
+	min-width:800px;
 	
 }
-#revenue{width:40%}
+#revenue
+{
+	width:30%;
+	min-width:400px;
+}
 
 #debt, #revenue
 {
-	height:30%;
-	margin-top:2%;
+	height:100%;
+	top : 0;
 }
+
+#topWrapper,#bottomWrapper
+{
+	position:absolute;
+	min-width: 1210px;
+	width:95%;
+	overflow:hidden;
+	left:2.5%;
+}
+
+#topWrapper
+{
+	height:30%;
+	min-height:222px;
+	top:2%;
+	
+}
+
+#bottomWrapper
+{
+	
+	height:62.5%;
+	min-height:411px;
+	top:32%;
+	
+}
+
+/*#debt, #revenue
+{
+	height:30%;
+	min-height:220px;
+	
+}*/
 #iDSCR
 {
-	width:22.5%;
-	margin-left:2.5%;
+	width:23.75%;
+	min-width:300px;
 	background-color:rgba(60,128,255,.2)
 }
 #pDSCR
 {
-	width:72.5%;
-	background-color:rgba(0,128,255,.2)
+	width:71.25%;
+	min-width:900px;
+	background-color:rgba(0,128,255,.2);
+	
 }
 
 #pDSCR,#iDSCR
 {
-	height:62.5%;
+	height:100%;
+	overflow:hidden;
 }
 
 #logo
@@ -67,6 +108,7 @@ body>div>h3
 	top:5px;
 	right:5px;
 	z-index: 1000;
+	display: none;
 }
 
 .gl
@@ -97,7 +139,7 @@ body>div>h3
 
 .bLabel
 {
-	position:fixed;
+	position:absolute;
 	left:7%;
 }
 
@@ -131,9 +173,9 @@ body>div>h3
 
 #dTable
 {
-	right: 7%;
-	top: 45%;
-	position: absolute;
+	float:left;
+	margin-left:10%;
+	position: relative;
 	border-collapse:collapse;
 	background-color:#BBCCFF
 }
@@ -170,11 +212,11 @@ body>div>h3
 }
 
 #lineGraph{
-	left: 30%;
-	width: 55%;
-	position:absolute;
-	top:45%;
-	height: 45%;
+	margin-left: 10%;
+	width: 70%;
+	position:relative;
+	float: left;
+	height: 80%;
 }
 
 polyline
@@ -182,4 +224,9 @@ polyline
 	stroke: green;
 	stroke-width : 1;
 	fill: none
+}
+
+body>div>div
+{
+	border:#404040 1px solid;
 }

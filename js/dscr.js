@@ -191,6 +191,7 @@ function updateData()
 	updateRevenue();
 	populatedTable();
 	makeLineGraph();
+	smallScreen();
 }
 
 function updateDebtService()
@@ -297,7 +298,7 @@ function makeBarGraph(value)
 		$gl=$("<div />").addClass("gl").css("top",(i+1)*10+"%");
 		$gl.appendTo("#plotArea");
 		
-		top=$gl.offset().top;
+		top=$gl.position().top;
 		
 		$label=$("<span />")
 			.html((9-i)*range/10+minValue)
@@ -642,6 +643,46 @@ function rgb(i)
 	return str;
 }
 
-main();
 
+function smallScreen()
+{
+	var s={};
+	s.bWT = $("#bottomWrapper").position().top;
+	s.tWH = $("#topWrapper").css("height")
+	s.tWH = s.tWH.slice(0,-2);
+	s.tWH = s.tWH * 1;
+	s.tWT = $("#topWrapper").offset().top;
+
+	
+	if(s.bWT < s.tWH + s.tWT)
+	{
+
+		$("#bottomWrapper").top(Math.floor(s.tWH+ s.tWT) + "px");
+	}
+	if(s.bWT> s.tWH + s.tWT + 1 )
+	{
+		$("#bottomWrapper").top(Math.floor(s.tWH + s.tWT) + "px");
+	}
+	
+	var hStr = $("#topWrapper").css("height");
+	hStr = hStr.slice(0,-2);
+	hStr = hStr *1;
+	hStr -=2;
+	
+	hStr = hStr < 220 ? 220 : hStr;
+	$("#topWrapper>div").css("height",hStr+"px");
+	
+	hStr = $("#bottomWrapper").css("height");
+	
+	hStr = hStr.slice(0,-2);
+	hStr = hStr *1;
+	hStr -=2;
+	hStr = hStr<410?410:hStr;
+	$("#bottomWrapper>div").css("height",hStr+"px");
+
+}
+
+
+main();
+smallScreen();
 window.onresize=updateData;
