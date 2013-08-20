@@ -45,7 +45,7 @@ function makeTable()
 	for (key in tableData)
 	{
 		$tr=$("<tr />");
-		$td=$("<td />").html(tableData[key]);
+		$td=$("<td />").html(tableData[key]).css("min-width", "160px");
 		$td.appendTo($tr);
 		//console.log(tableData[key]);
 		
@@ -55,13 +55,20 @@ function makeTable()
 			html = constructHTML(tableData[key], tableProperties[k2]);
 			
 			$td=$("<td />").html(html);
+			console.log(k2)
+			if(k2 == 1)
+				$td.css("min-width", "85px");
+			if(k2 == 2)
+				$td.css("min-width", "120px");
+			if(k2 == 3)
+				$td.css("min-width", "190px");
 			$td.appendTo($tr);
 			
 			
 		}
 		var pmt = 0;
 		var rate = getDefault(tableData[key],"Interest");
-		var term = 0;
+		var term = getDefault(tableData[key],"Term");
 		var principal = getDefault(tableData[key],"Principal");
 		var LOC=true;
 		
@@ -70,7 +77,7 @@ function makeTable()
 		if(LOC)
 			pmt = rate * principal/100;
 		else
-			pmt = (rate /1200 + (rate/1200)/Math.pow((1+rate/1200),term))*principal*12;
+			pmt = calculatePMT(rate,principal,term);
 			
 		pmtArr.push(pmt);
 		$("<td />")
@@ -121,11 +128,11 @@ function constructHTML(vString, typeStr)
 			break;
 		case "Interest":
 			str = "<input type='number' min='0' step='0.125' value='"+ val +"' class='" + typeStr.replace(/ /g,"");
-			str += "' name='" + labelStr + "' id='" + labelStr + "'></input><label for='" + labelStr + "'>%</label>";
+			str += "' name='" + labelStr + "' id='" + labelStr + "' ></input><label for='" + labelStr + "'>%</label>";
 			break;
 		case "Term":
 			str = "<input name='" + labelStr + "' type='number' min='0' class='" + typeStr.replace(/ /g,"") + "'"
-			str += "value='" + val + "' id='"+labelStr+"'></input><label for='" + labelStr + "'> months</label>";
+			str += "value='" + val + "' id='"+labelStr+"' ></input><label for='" + labelStr + "'> months</label>";
 			break;
 		case "Accelerated Pay Down":
 			str = "$<input name='" + labelStr + "' type='number' min='0' class='" + typeStr.replace(/ /g,"") + "'"
@@ -194,6 +201,20 @@ function updateData()
 	smallScreen();
 }
 
+function calculatePMT(r,PV,n)
+{
+	var num = r*PV/1200
+	var denom = 1-Math.pow((1+(r/1200)),-n);
+	var pmt = num/denom;
+	
+	
+	console.log("r= " + r + " PV= " + PV + " n= " + n);
+	console.log("r*PV = " + num);
+	console.log("1-(1+r)^n = " + denom);
+	
+	return pmt;
+}
+
 function updateDebtService()
 {
 	counter=0;
@@ -227,7 +248,7 @@ function updateDebtService()
 		if(LOC)
 			pmt = (rate * principal/100) + pdown*1;
 		else
-			pmt = (rate /1200 + (rate/1200)/Math.pow((1+rate/1200),term))*principal*12 + pdown*1;
+			pmt = calculatePMT(rate,principal,term)*12;
 			
 		pmt=Math.floor(pmt*100)/100;
 			
